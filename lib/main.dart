@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,17 +27,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List ImgList = ['Images/Cairo.jpg','Images/download.jpg','Images/photo.jpg'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Flutter Demo"),),
-      body:ClippedText(),
+      body:buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  ListView buildListView() {
+    return ListView(
+      children: [
+      SizedBox(height: 30,),
+      Text(
+        "Slider 1 : Initial page index 0\n\n",
+        textAlign: TextAlign.center,
+      ),
+      CarouselSlider(
+          items:ImgList.map((URLImage){
+            return Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Image.asset(URLImage,fit: BoxFit.fill,),
+            );
+          }).toList(),
+          options: CarouselOptions(height: 200,initialPage: 0)
+      ),
+      CarouselSlider.builder(
+          itemCount:ImgList.length,
+          itemBuilder: (BuildContext context,int index,int){
+            return Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Image.asset(ImgList[index],fit: BoxFit.fill,),
+            );
+          },
+          options: CarouselOptions(height: 200,initialPage: 0)
+      )
+    ],);
   }
   Column ClippedText(){
     return Column(
