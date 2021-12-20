@@ -27,12 +27,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _radioValues=0;
   List ImgList = ['Images/Cairo.jpg','Images/download.jpg','Images/photo.jpg'];
+  late String result;
+  late Color resultColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Flutter Demo"),),
-      body:buildListView(),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text("Guess the answer : 2+2 = ?",
+            style: TextStyle(
+              color: Colors.lightBlue,
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),),
+            buildRow(3),
+            buildRow(4),
+            buildRow(5),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         tooltip: 'Increment',
@@ -40,7 +59,36 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
+  myDialg(){
+    var ad = AlertDialog(
+       content: Container(
+         height: 100,
+         child: Column(
+           children: [
+             Text("$result",style: TextStyle(color: resultColor),),
+             Divider(),
+             Text("Answer is :4")
+           ],
+         ),
+       ),
+    );
+    showDialog(context: context,builder:(context) => ad,);
+ }
+  Row buildRow(int Value){
+    return Row(
+            children: [
+            Radio(value: Value, groupValue:_radioValues, onChanged:(value){
+              setState(() {
+                _radioValues =Value;
+                result =Value==4?"Correct answer":"Wrong answer";
+                resultColor = Value==4?Colors.green:Colors.red;
+                myDialg();
+              });
+            }),
+            Text("$Value"),
+           ],
+          );
+  }
   ListView buildListView() {
     return ListView(
       children: [
