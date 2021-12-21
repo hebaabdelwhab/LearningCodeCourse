@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -7,7 +8,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,27 +31,15 @@ class _MyHomePageState extends State<MyHomePage> {
   List ImgList = ['Images/Cairo.jpg','Images/download.jpg','Images/photo.jpg'];
   late String result;
   late Color resultColor;
-
+  //CheckBox;
+  bool js = false ;
+  bool CSharp = false;
+  bool python = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Flutter Demo"),),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text("Guess the answer : 2+2 = ?",
-            style: TextStyle(
-              color: Colors.lightBlue,
-              fontWeight: FontWeight.bold,
-              fontSize: 26,
-            ),),
-            buildRow(3),
-            buildRow(4),
-            buildRow(5),
-          ],
-        ),
-      ),
+      body: buildCheckBox(),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         tooltip: 'Increment',
@@ -59,6 +47,82 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+  //CheckBox;
+  Padding buildCheckBox() {
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Checkbox(
+                value: js,
+                onChanged: (value){
+                setState(() {
+                  js = value!;
+                });
+              }),
+              Text("JS")
+            ],
+          ),
+          CheckboxListTile(
+            value: js,
+            onChanged: (value){
+            setState(() {
+              js = value!;
+            });
+          },
+          title: Text("JS"),),
+        ],
+      ),
+    );
+  }
+  //radio button;
+  Container buildRadioListTile2() {
+    return Container(
+      color: _radioValues==0?Colors.brown:Colors.green,
+      padding: EdgeInsets.all(32),
+      child: Column(
+        children: [
+          buildRadioListTile(0,"Brown","Change bg to Brown"),
+          buildRadioListTile(1,"Green","Change bg to Green"),
+        ],
+      ),
+    );
+  }
+  RadioListTile buildRadioListTile(val,txt , subtext) {
+    return RadioListTile(
+              value: val,
+              controlAffinity: ListTileControlAffinity.platform,
+              groupValue: _radioValues,
+              onChanged:(value){
+                setState(() {
+                  _radioValues = value;
+                });
+              },
+    title:Text(txt),
+    subtitle:Text(subtext,style: TextStyle(color: Colors.white)),
+    );
+  }
+  Padding buildRadio() {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text("Guess the answer : 2+2 = ?",
+          style: TextStyle(
+            color: Colors.lightBlue,
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
+          ),),
+          buildRow(3),
+          buildRow(4),
+          buildRow(5),
+        ],
+      ),
+    );
+  }
+  //How to making dialog on flutter;
   myDialg(){
     var ad = AlertDialog(
        content: Container(
@@ -74,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     showDialog(context: context,builder:(context) => ad,);
  }
+ //How to making radio using radio widget ;
   Row buildRow(int Value){
     return Row(
             children: [
@@ -89,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
            ],
           );
   }
+  //How to make CarouselSlider in flutter;
   ListView buildListView() {
     return ListView(
       children: [
@@ -120,6 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     ],);
   }
+  //How to deal with text in flutter;
   Column ClippedText(){
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
